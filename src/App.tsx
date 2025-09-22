@@ -81,32 +81,64 @@ function App() {
             </button>
           </div>
 
-          {/* Filter Chips */}
+          {/* Filter Chips (multi-select) */}
           <div
             className="filter-chips-row"
             aria-label="Active filters"
             role="list"
           >
-            {filters.make && (
-              <span className="filter-chip" role="listitem">
-                {filters.make}
-              </span>
-            )}
-            {filters.color && (
-              <span className="filter-chip" role="listitem">
-                {filters.color}
-              </span>
-            )}
-            {filters.bodyType && (
-              <span className="filter-chip" role="listitem">
-                {filters.bodyType}
-              </span>
-            )}
-            {filters.priceRange && (
-              <span className="filter-chip" role="listitem">
-                {filters.priceRange}
-              </span>
-            )}
+            {filters.make && filters.make.length > 0 &&
+              filters.make.map((make, idx) => (
+                <span className="filter-chip" role="listitem" key={"make" + make + idx}>
+                  {make}
+                  <button
+                    aria-label={`Remove ${make} filter`}
+                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    onClick={() => updateFilters({ make: [make] })}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            {filters.color && filters.color.length > 0 &&
+              filters.color.map((color, idx) => (
+                <span className="filter-chip" role="listitem" key={"color" + color + idx}>
+                  {color}
+                  <button
+                    aria-label={`Remove ${color} filter`}
+                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    onClick={() => updateFilters({ color: [color] })}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            {filters.bodyType && filters.bodyType.length > 0 &&
+              filters.bodyType.map((bodyType, idx) => (
+                <span className="filter-chip" role="listitem" key={"bodyType" + bodyType + idx}>
+                  {bodyType}
+                  <button
+                    aria-label={`Remove ${bodyType} filter`}
+                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    onClick={() => updateFilters({ bodyType: [bodyType] })}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            {filters.priceRange && filters.priceRange.length > 0 &&
+              filters.priceRange.map((range, idx) => (
+                <span className="filter-chip" role="listitem" key={"priceRange" + range + idx}>
+                  {range}
+                  <button
+                    aria-label={`Remove ${range} filter`}
+                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    onClick={() => updateFilters({ priceRange: [range] })}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
           </div>
 
           {/* Top Banner */}

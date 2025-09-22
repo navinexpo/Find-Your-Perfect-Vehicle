@@ -10,10 +10,10 @@ import { isValidZipCode } from "@/utils/validation";
 import { ERROR_MESSAGES } from "@/constants";
 
 const initialFilters: VehicleFilters = {
-  make: "",
-  color: "",
-  bodyType: "",
-  priceRange: "",
+  make: [],
+  color: [],
+  bodyType: [],
+  priceRange: [],
 };
 
 const initialState: SearchState = {
@@ -87,29 +87,31 @@ export const useVehicleSearch = () => {
     let filtered = [...state.vehicles];
 
     // Apply filters
-    if (state.filters.make) {
+    if (state.filters.make && state.filters.make.length > 0) {
       filtered = filtered.filter(
-        (vehicle) => vehicle.make === state.filters.make
+        (vehicle) => state.filters.make.includes(vehicle.make)
       );
     }
-    if (state.filters.color) {
+    if (state.filters.color && state.filters.color.length > 0) {
       filtered = filtered.filter(
-        (vehicle) => vehicle.color === state.filters.color
+        (vehicle) => state.filters.color.includes(vehicle.color)
       );
     }
     // Body type filter (placeholder, as data does not have bodyType)
-    if (state.filters.bodyType) {
-      // filtered = filtered.filter((vehicle) => vehicle.bodyType === state.filters.bodyType);
+    if (state.filters.bodyType && state.filters.bodyType.length > 0) {
+      // filtered = filtered.filter((vehicle) => state.filters.bodyType.includes(vehicle.bodyType));
     }
     // Price range filter
-    if (state.filters.priceRange) {
+    if (state.filters.priceRange && state.filters.priceRange.length > 0) {
       filtered = filtered.filter((vehicle) => {
         const price = vehicle.price;
-        if (state.filters.priceRange === "under-30k") return price < 30000;
-        if (state.filters.priceRange === "30k-60k")
-          return price >= 30000 && price <= 60000;
-        if (state.filters.priceRange === "over-60k") return price > 60000;
-        return true;
+        // If any selected price range matches, include
+        return state.filters.priceRange.some((range) => {
+          if (range === "under-30k") return price < 30000;
+          if (range === "30k-60k") return price >= 30000 && price <= 60000;
+          if (range === "over-60k") return price > 60000;
+          return true;
+        });
       });
     }
 
@@ -131,11 +133,27 @@ export const useVehicleSearch = () => {
   }, [state.vehicles, state.filters, state.sortBy]);
 
   // Update filters
+  // Multi-select update logic
   const updateFilters = useCallback((newFilters: Partial<VehicleFilters>) => {
-    setState((prev) => ({
-      ...prev,
-      filters: { ...prev.filters, ...newFilters },
-    }));
+    setState((prev) => {
+      // For each filter, merge arrays or replace as needed
+      const updatedFilters: VehicleFilters = { ...prev.filters };
+      for (const key in newFilters) {
+        const value = newFilters[key as keyof VehicleFilters];
+        if (Array.isArray(value)) {
+          updatedFilters[key as keyof VehicleFilters] = value;
+        } else if (typeof value === 'string') {
+          // For backward compatibility, treat string as toggle
+          const arr = Array.isArray(prev.filters[key as keyof VehicleFilters]) ? [...(prev.filters[key as keyof VehicleFilters] as string[])] : [];
+          if (arr.includes(value)) {
+            updatedFilters[key as keyof VehicleFilters] = arr.filter((v) => v !== value);
+          } else {
+            updatedFilters[key as keyof VehicleFilters] = [...arr, value];
+          }
+        }
+      }
+      return { ...prev, filters: updatedFilters };
+    });
   }, []);
 
   // Update sort option

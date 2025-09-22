@@ -10,11 +10,12 @@ export interface Vehicle {
   image: string;
 }
 
+
 export interface VehicleFilters {
-  make: string;
-  color: string;
-  bodyType?: string;
-  priceRange?: string;
+  make: string[];
+  color: string[];
+  bodyType?: string[];
+  priceRange?: string[];
 }
 
 export type SortOption = "price-high" | "price-low" | "year";
