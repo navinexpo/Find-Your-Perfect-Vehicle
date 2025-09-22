@@ -12,6 +12,8 @@ import { ERROR_MESSAGES } from "@/constants";
 const initialFilters: VehicleFilters = {
   make: "",
   color: "",
+  bodyType: "",
+  priceRange: "",
 };
 
 const initialState: SearchState = {
@@ -94,6 +96,21 @@ export const useVehicleSearch = () => {
       filtered = filtered.filter(
         (vehicle) => vehicle.color === state.filters.color
       );
+    }
+    // Body type filter (placeholder, as data does not have bodyType)
+    if (state.filters.bodyType) {
+      // filtered = filtered.filter((vehicle) => vehicle.bodyType === state.filters.bodyType);
+    }
+    // Price range filter
+    if (state.filters.priceRange) {
+      filtered = filtered.filter((vehicle) => {
+        const price = vehicle.price;
+        if (state.filters.priceRange === "under-30k") return price < 30000;
+        if (state.filters.priceRange === "30k-60k")
+          return price >= 30000 && price <= 60000;
+        if (state.filters.priceRange === "over-60k") return price > 60000;
+        return true;
+      });
     }
 
     // Apply sorting

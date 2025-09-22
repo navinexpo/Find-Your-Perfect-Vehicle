@@ -13,6 +13,8 @@ export interface Vehicle {
 export interface VehicleFilters {
   make: string;
   color: string;
+  bodyType?: string;
+  priceRange?: string;
 }
 
 export type SortOption = "price-high" | "price-low" | "year";
