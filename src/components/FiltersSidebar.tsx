@@ -99,7 +99,8 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
   }
   if (filters.priceRange && filters.priceRange.length > 0) {
     filters.priceRange.forEach((range) => {
-      const priceLabel = priceRanges.find((r) => r.value === range)?.label || range;
+      const priceLabel =
+        priceRanges.find((r) => r.value === range)?.label || range;
       filterChips.push({ label: priceLabel, key: "priceRange", value: range });
     });
   }
@@ -147,9 +148,14 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
+            flexWrap: "nowrap",
             gap: "0.5rem",
             margin: "1rem 0 0.5rem 0",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#c2d0f7 #f4f4f6",
+            paddingBottom: "2px",
           }}
         >
           {filterChips.map((chip, idx) => (
@@ -164,6 +170,7 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 fontWeight: 500,
                 fontSize: "1rem",
                 color: "#232536",
+                whiteSpace: "nowrap",
               }}
             >
               {chip.label}
@@ -239,7 +246,7 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 onChange={() => onFiltersChange({ bodyType: [] })}
                 aria-label="All body types"
               />
-              <span className="checkmark"></span>
+              {/* <span className="checkmark"></span> */}
               All Body Types{" "}
               <span className="filter-count">({allVehicles.length})</span>
             </label>
@@ -248,10 +255,19 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.bodyType && filters.bodyType.includes(type)}
-                  onChange={() => onFiltersChange({ bodyType: type })}
+                  onChange={(e) => {
+                    const arr = filters.bodyType || [];
+                    if (e.target.checked) {
+                      onFiltersChange({ bodyType: [...arr, type] });
+                    } else {
+                      onFiltersChange({
+                        bodyType: arr.filter((v) => v !== type),
+                      });
+                    }
+                  }}
                   aria-label={type}
                 />
-                <span className="checkmark"></span>
+                {/* <span className="checkmark"></span> */}
                 {type} <span className="filter-count">(0)</span>
               </label>
             ))}
@@ -282,7 +298,7 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 onChange={() => onFiltersChange({ priceRange: [] })}
                 aria-label="All price ranges"
               />
-              <span className="checkmark"></span>
+              {/* <span className="checkmark"></span> */}
               All Prices{" "}
               <span className="filter-count">({allVehicles.length})</span>
             </label>
@@ -290,11 +306,23 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
               <label key={range.value} className="custom-checkbox">
                 <input
                   type="checkbox"
-                  checked={filters.priceRange && filters.priceRange.includes(range.value)}
-                  onChange={() => onFiltersChange({ priceRange: range.value })}
+                  checked={
+                    filters.priceRange &&
+                    filters.priceRange.includes(range.value)
+                  }
+                  onChange={(e) => {
+                    const arr = filters.priceRange || [];
+                    if (e.target.checked) {
+                      onFiltersChange({ priceRange: [...arr, range.value] });
+                    } else {
+                      onFiltersChange({
+                        priceRange: arr.filter((v) => v !== range.value),
+                      });
+                    }
+                  }}
                   aria-label={range.label}
                 />
-                <span className="checkmark"></span>
+                {/* <span className="checkmark"></span> */}
                 {range.label}{" "}
                 <span className="filter-count">
                   ({countByPrice(range.value)})
@@ -324,7 +352,7 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 onChange={() => onFiltersChange({ make: [] })}
                 aria-label="All makes"
               />
-              <span className="checkmark"></span>
+              {/* <span className="checkmark"></span> */}
               All Makes{" "}
               <span className="filter-count">({allVehicles.length})</span>
             </label>
@@ -333,10 +361,17 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.make && filters.make.includes(make)}
-                  onChange={() => onFiltersChange({ make: make })}
+                  onChange={(e) => {
+                    const arr = filters.make || [];
+                    if (e.target.checked) {
+                      onFiltersChange({ make: [...arr, make] });
+                    } else {
+                      onFiltersChange({ make: arr.filter((v) => v !== make) });
+                    }
+                  }}
                   aria-label={make}
                 />
-                <span className="checkmark"></span>
+                {/* <span className="checkmark"></span> */}
                 {make}{" "}
                 <span className="filter-count">({countBy("make", make)})</span>
               </label>
@@ -364,7 +399,7 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 onChange={() => onFiltersChange({ color: [] })}
                 aria-label="All colors"
               />
-              <span className="checkmark"></span>
+              {/* <span className="checkmark"></span> */}
               All Colors{" "}
               <span className="filter-count">({allVehicles.length})</span>
             </label>
@@ -373,10 +408,19 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.color && filters.color.includes(color)}
-                  onChange={() => onFiltersChange({ color: color })}
+                  onChange={(e) => {
+                    const arr = filters.color || [];
+                    if (e.target.checked) {
+                      onFiltersChange({ color: [...arr, color] });
+                    } else {
+                      onFiltersChange({
+                        color: arr.filter((v) => v !== color),
+                      });
+                    }
+                  }}
                   aria-label={color}
                 />
-                <span className="checkmark"></span>
+                {/* <span className="checkmark"></span> */}
                 {color}{" "}
                 <span className="filter-count">
                   ({countBy("color", color)})
@@ -396,6 +440,8 @@ export const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
           height: fit-content;
           position: sticky;
           top: 2rem;
+          overflow-y: auto;
+          max-height: 80vh;
         }
 
         .filters-header {

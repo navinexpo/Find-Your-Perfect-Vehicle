@@ -4,6 +4,7 @@ import { SearchForm } from "./components/SearchForm";
 import { FiltersSidebar } from "./components/FiltersSidebar";
 import { VehicleGrid } from "./components/VehicleGrid";
 import { ErrorMessage } from "./components/ErrorMessage";
+import { FloatingNavbar } from "./components/FloatingNavbar";
 
 function App() {
   const {
@@ -26,36 +27,8 @@ function App() {
 
   return (
     <div className="app">
-      {/* Modern Header */}
-      <header
-        className="main-header"
-        role="banner"
-        aria-label="Main site header"
-      >
-        <div className="header-content">
-          <img src="/vite.svg" alt="Flexcar Logo" className="header-logo" />
-          <nav className="header-nav" aria-label="Main navigation">
-            <a
-              href="#"
-              className="header-link active"
-              aria-current="page"
-              tabIndex={0}
-            >
-              Inventory
-            </a>
-            <a href="#" className="header-link" tabIndex={0}>
-              How it Works
-            </a>
-            <a href="#" className="header-link" tabIndex={0}>
-              About
-            </a>
-          </nav>
-          <button className="header-cta" aria-label="Sign up for Flexcar">
-            Sign Up
-          </button>
-        </div>
-      </header>
-
+      <FloatingNavbar />
+      <div />
       <SearchForm onSearch={searchVehicles} isLoading={isLoading} />
 
       {error && (
@@ -87,52 +60,104 @@ function App() {
             aria-label="Active filters"
             role="list"
           >
-            {filters.make && filters.make.length > 0 &&
+            {filters.make &&
+              filters.make.length > 0 &&
               filters.make.map((make, idx) => (
-                <span className="filter-chip" role="listitem" key={"make" + make + idx}>
+                <span
+                  className="filter-chip"
+                  role="listitem"
+                  key={"make" + make + idx}
+                >
                   {make}
                   <button
                     aria-label={`Remove ${make} filter`}
-                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    style={{
+                      marginLeft: 6,
+                      background: "none",
+                      border: "none",
+                      color: "#232536",
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      cursor: "pointer",
+                    }}
                     onClick={() => updateFilters({ make: [make] })}
                   >
                     ×
                   </button>
                 </span>
               ))}
-            {filters.color && filters.color.length > 0 &&
+            {filters.color &&
+              filters.color.length > 0 &&
               filters.color.map((color, idx) => (
-                <span className="filter-chip" role="listitem" key={"color" + color + idx}>
+                <span
+                  className="filter-chip"
+                  role="listitem"
+                  key={"color" + color + idx}
+                >
                   {color}
                   <button
                     aria-label={`Remove ${color} filter`}
-                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    style={{
+                      marginLeft: 6,
+                      background: "none",
+                      border: "none",
+                      color: "#232536",
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      cursor: "pointer",
+                    }}
                     onClick={() => updateFilters({ color: [color] })}
                   >
                     ×
                   </button>
                 </span>
               ))}
-            {filters.bodyType && filters.bodyType.length > 0 &&
+            {filters.bodyType &&
+              filters.bodyType.length > 0 &&
               filters.bodyType.map((bodyType, idx) => (
-                <span className="filter-chip" role="listitem" key={"bodyType" + bodyType + idx}>
+                <span
+                  className="filter-chip"
+                  role="listitem"
+                  key={"bodyType" + bodyType + idx}
+                >
                   {bodyType}
                   <button
                     aria-label={`Remove ${bodyType} filter`}
-                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    style={{
+                      marginLeft: 6,
+                      background: "none",
+                      border: "none",
+                      color: "#232536",
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      cursor: "pointer",
+                    }}
                     onClick={() => updateFilters({ bodyType: [bodyType] })}
                   >
                     ×
                   </button>
                 </span>
               ))}
-            {filters.priceRange && filters.priceRange.length > 0 &&
+            {filters.priceRange &&
+              filters.priceRange.length > 0 &&
               filters.priceRange.map((range, idx) => (
-                <span className="filter-chip" role="listitem" key={"priceRange" + range + idx}>
+                <span
+                  className="filter-chip"
+                  role="listitem"
+                  key={"priceRange" + range + idx}
+                >
                   {range}
                   <button
                     aria-label={`Remove ${range} filter`}
-                    style={{ marginLeft: 6, background: "none", border: "none", color: "#232536", fontWeight: 700, fontSize: "1.1rem", cursor: "pointer" }}
+                    style={{
+                      marginLeft: 6,
+                      background: "none",
+                      border: "none",
+                      color: "#232536",
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      cursor: "pointer",
+                    }}
                     onClick={() => updateFilters({ priceRange: [range] })}
                   >
                     ×
@@ -207,7 +232,7 @@ function App() {
               </div>
 
               {/* Video Card */}
-              <div
+              {/* <div
                 className="video-card"
                 role="region"
                 aria-label="Flexcar video"
@@ -229,7 +254,7 @@ function App() {
                   />
                   Your browser does not support the video tag.
                 </video>
-              </div>
+              </div> */}
 
               <VehicleGrid vehicles={filteredVehicles} isLoading={isLoading} />
             </main>
@@ -373,7 +398,7 @@ function App() {
           flex-direction: column;
           align-items: center;
           box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-          max-width: 480px;
+          max-width: revert-layer;
           margin-left: auto;
           margin-right: auto;
           opacity: 0;

@@ -88,13 +88,13 @@ export const useVehicleSearch = () => {
 
     // Apply filters
     if (state.filters.make && state.filters.make.length > 0) {
-      filtered = filtered.filter(
-        (vehicle) => state.filters.make.includes(vehicle.make)
+      filtered = filtered.filter((vehicle) =>
+        state.filters.make.includes(vehicle.make)
       );
     }
     if (state.filters.color && state.filters.color.length > 0) {
-      filtered = filtered.filter(
-        (vehicle) => state.filters.color.includes(vehicle.color)
+      filtered = filtered.filter((vehicle) =>
+        state.filters.color.includes(vehicle.color)
       );
     }
     // Body type filter (placeholder, as data does not have bodyType)
@@ -142,11 +142,15 @@ export const useVehicleSearch = () => {
         const value = newFilters[key as keyof VehicleFilters];
         if (Array.isArray(value)) {
           updatedFilters[key as keyof VehicleFilters] = value;
-        } else if (typeof value === 'string') {
+        } else if (typeof value === "string") {
           // For backward compatibility, treat string as toggle
-          const arr = Array.isArray(prev.filters[key as keyof VehicleFilters]) ? [...(prev.filters[key as keyof VehicleFilters] as string[])] : [];
+          const arr = Array.isArray(prev.filters[key as keyof VehicleFilters])
+            ? [...(prev.filters[key as keyof VehicleFilters] as string[])]
+            : [];
           if (arr.includes(value)) {
-            updatedFilters[key as keyof VehicleFilters] = arr.filter((v) => v !== value);
+            updatedFilters[key as keyof VehicleFilters] = arr.filter(
+              (v) => v !== value
+            );
           } else {
             updatedFilters[key as keyof VehicleFilters] = [...arr, value];
           }

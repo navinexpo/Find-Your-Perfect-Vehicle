@@ -48,7 +48,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
               disabled={isLoading || !zipCode}
               className="search-button"
             >
-              {isLoading ? "Searching..." : "Search Vehicles"}
+              {isLoading ? "Searching." : "Search Vehicles"}
             </button>
           </div>
         </form>
@@ -73,7 +73,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
       <style>{`
         .search-form-container {
           background: linear-gradient(135deg, ${THEME_COLOR} 0%, #1e1f5f 100%);
-          padding: 3rem 1rem;
+          padding: 1rem 1rem;
           text-align: center;
           color: white;
         }
@@ -134,7 +134,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
 
         .search-button {
           padding: 1rem 2rem;
-          font-size: 1.1rem;
+          font-size: 1.0rem;
           font-weight: 600;
           background: linear-gradient(45deg, #4f80ff, #6b9bff);
           color: white;

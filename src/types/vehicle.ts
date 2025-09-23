@@ -10,7 +10,6 @@ export interface Vehicle {
   image: string;
 }
 
-
 export interface VehicleFilters {
   make: string[];
   color: string[];

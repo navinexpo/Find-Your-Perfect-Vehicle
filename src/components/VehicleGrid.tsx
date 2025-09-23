@@ -1,6 +1,7 @@
 import React from "react";
 import type { Vehicle } from "../types/vehicle";
 import { VehicleCard } from "./VehicleCard";
+import { FlexcarVideoCard } from "./FlexcarVideoCard";
 
 interface VehicleGridProps {
   vehicles: Vehicle[];
@@ -104,6 +105,7 @@ export const VehicleGrid: React.FC<VehicleGridProps> = ({
 
   return (
     <div className="vehicle-grid">
+      <FlexcarVideoCard />
       {vehicles.map((vehicle) => (
         <VehicleCard key={vehicle.id} vehicle={vehicle} />
       ))}
