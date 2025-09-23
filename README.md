@@ -25,7 +25,7 @@ A modern, responsive React application for searching and filtering vehicles by Z
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd vehicle-search-app
+   cd flex-car-assignment
    ```
 
 2. **Install dependencies**
